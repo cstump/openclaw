@@ -1,4 +1,4 @@
-FROM golang:1.23-bookworm AS go-builder
+FROM golang:1.25-bookworm AS go-builder
 RUN go install github.com/steipete/wacli@latest
 RUN go install github.com/steipete/gogcli@latest
 
