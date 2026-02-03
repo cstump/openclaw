@@ -27,7 +27,6 @@ RUN pnpm ui:install
 RUN pnpm ui:build
 
 ENV NODE_ENV=production
-ENV GOG_ACCOUNT=ccstump@gmail.com
 
 # Security hardening: run as non-root user
 # The node:22-bookworm image includes a 'node' user (uid 1000)
