@@ -1,7 +1,5 @@
-# Adds WhatsApp CLI (built from source)
 FROM golang:1.23-bookworm AS go-builder
 RUN go install github.com/steipete/wacli@latest
-COPY --from=go-builder /go/bin/wacli /usr/local/bin/wacli
 
 FROM node:22-bookworm
 
@@ -11,6 +9,8 @@ RUN apt-get update && apt-get install -y socat && rm -rf /var/lib/apt/lists/*
 RUN curl -L https://github.com/steipete/gogcli/releases/download/v0.9.0/gogcli_0.9.0_linux_amd64.tar.gz \
   | tar -xz -C /usr/local/bin && mv /usr/local/bin/gogcli /usr/local/bin/gog && chmod +x /usr/local/bin/gog
 
+# Adds WhatsApp CLI (built from source)
+COPY --from=go-builder /go/bin/wacli /usr/local/bin/wacli
 
 WORKDIR /app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
