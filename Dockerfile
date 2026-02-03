@@ -1,13 +1,13 @@
 FROM golang:1.23-bookworm AS go-builder
 RUN go install github.com/steipete/wacli@latest
+RUN go install github.com/steipete/gogcli@latest
 
 FROM node:22-bookworm
 
 RUN apt-get update && apt-get install -y socat && rm -rf /var/lib/apt/lists/*
 
-# Adds Gmail CLI (gogcli) binary
-RUN curl -L https://github.com/steipete/gogcli/releases/download/v0.9.0/gogcli_0.9.0_linux_amd64.tar.gz \
-  | tar -xz -C /usr/local/bin && mv /usr/local/bin/gogcli /usr/local/bin/gog && chmod +x /usr/local/bin/gog
+# Adds Gmail CLI (gogcli) binary (built from source)
+COPY --from=go-builder /go/bin/gogcli /usr/local/bin/gog
 
 # Adds WhatsApp CLI (built from source)
 COPY --from=go-builder /go/bin/wacli /usr/local/bin/wacli
