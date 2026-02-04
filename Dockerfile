@@ -19,7 +19,7 @@ COPY scripts ./scripts
 COPY patches ./patches
 
 RUN corepack enable
-RUN pnpm install --frozen-lockfile --jobs 1
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 RUN pnpm build
